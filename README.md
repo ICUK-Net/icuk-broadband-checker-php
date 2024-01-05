@@ -85,8 +85,7 @@ panel will not appear until a search takes place.
 </html>
 ```
 
-![Example of what the above code should result in](https://github.com/boronbritt/icuk-broadband-availability-checker/blob/master/assets/default_example.png "Should result in this")
-
+![Example of what the above code should result in](https://github.com/BoronBGP/icuk-broadband-checker-php/blob/master/assets/default_example.png "Should result in this")
 
 ### Edit error message
 To swap out the error message that occurs when an availability check fails you can use the error message as a parameter of render_search
@@ -112,7 +111,7 @@ $astyle->background_colour = "rgb(0, 255, 0)";
 
 $ba->render_styles($style, $rstyle, $astyle);
 ```
-![Example of what the above code should result in](https://github.com/boronbritt/icuk-broadband-availability-checker/blob/master/assets/style_example.png "Should result in this")
+![Example of what the above code should result in](https://github.com/BoronBGP/icuk-broadband-checker-php/blob/master/assets/style_example.png "Should result in this")
 
 Currently the rgb, rgba, hex, hsl, hsla, CIELab, and xyz colour formats are supported, while colour names such as "purple" or "darkgreen" are invalid.
 
