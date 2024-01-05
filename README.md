@@ -35,7 +35,7 @@ Create a composer.json file with this data (if you already have a composer.json 
 Install with all dependencies
 
 ```bash
-composer install
+php composer.phar install
 ```
 
 ## Usage
