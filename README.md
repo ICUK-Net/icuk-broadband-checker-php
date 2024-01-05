@@ -8,7 +8,7 @@ The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are re
 
 Download and extract the latest release
 ```bash
-wget [https://github.com/BoronBGP/icuk-broadband-checker-php/releases/download/latest/icuk-broadband-checker.tar.gz](https://github.com/BoronBGP/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz)
+wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
 tar -xvf icuk-broadband-checker.tar.gz
 ```
 
