@@ -2,10 +2,9 @@ name: PHP Composer
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
+    tags:
+      - '*'
+  
 permissions: write-all
 
 jobs:
@@ -35,18 +34,14 @@ jobs:
       run: |
           tar -czf icuk-broadband-checker.tar.gz vendor/
           
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-          
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.get_version.outputs.VERSION }}
-        release_name: Release ${{ steps.get_version.outputs.VERSION }}
+        tag_name: $GITHUB_REF_NAME
+        release_name: Release $GITHUB_REF_NAME
         draft: false
         prerelease: false
       
