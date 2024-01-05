@@ -2,6 +2,7 @@
     "name": "icuk/broadband-availability-php",
     "description": "Integrate the ICUK broadband availability checker into your PHP application",
     "type": "library",
+    "license": "MIT",
     "autoload": {
         "files": [
             "src/BroadbandAvailability.php",
@@ -13,14 +14,8 @@
     },
     "authors": [
         {
-            "name": "BI",
-            "email": "benisclueless@gmail.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://icuk.repo.repman.io"
+            "name": "Ben Innes",
+            "email": "ben@icuk.net"
         }
     ],
     "require": {
