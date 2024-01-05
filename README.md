@@ -7,7 +7,7 @@ The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are re
 Download and extract the latest release
 ```bash
 wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/download/latest/icuk-broadband-checker.tar.gz
-tar -xvf ba-checker.tar.gz
+tar -xvf icuk-broadband-checker.tar.gz
 ```
 
 That is is all that is needed to install the availability checker, if this fails then try installing from source below
