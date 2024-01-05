@@ -1,5 +1,5 @@
 # ICUK Broadband Availability Checker
-[![Latest Composer Build](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml/badge.svg)](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml)
+[![Latest Build](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml/badge.svg)](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml)
 
 Integrate the ICUK broadband availability checker into your PHP application
 ## Installation
