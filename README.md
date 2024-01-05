@@ -42,8 +42,8 @@ php composer.phar install
 
 ### api.php
 
-This file will allow the user to make requests to the broadband availability api. You should in this format but with your own credentials and
-you can and should use your own method of authentication beforehand to prevent unauthorised api access to the endpoint.
+This file will allow the user to make requests to the broadband availability api. You should in this format but substitute the credentials with your own and
+you can and should use your own method of authentication beforehand to prevent unauthorised access to the endpoint.
 
 ```php
 <?php
