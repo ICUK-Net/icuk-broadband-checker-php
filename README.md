@@ -22,7 +22,7 @@ Download composer.phar (if not already installed)
 wget https://getcomposer.org/download/latest-stable/composer.phar
 ```
 
-Create a composer.json file with this data (if you already have a composer.json file add the data from the require and repositories)
+Create a composer.json file with this data (if you already have a composer.json file add the data from the require)
 ```json
 {
     "name": "root/html",
