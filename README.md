@@ -6,7 +6,7 @@ The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are re
 
 Download and extract the latest release
 ```bash
-wget https://github.com/boronbritt/icuk-broadband-availability-checker/releases/download/latest/ba-checker.tar.gz
+wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/download/latest/icuk-broadband-checker.tar.gz
 tar -xvf ba-checker.tar.gz
 ```
 
