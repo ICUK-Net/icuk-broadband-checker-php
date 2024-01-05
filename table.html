@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #broadband-availability-address-list {
+            font-family: Open Sans, Verdana, HelveticaNeue, Arial, sans-serif;
+            width: auto;
+            border-radius: 4px;
+            font-size: 11px;
+            border-collapse: separate;
+            border: 1px solid #ccc;
+            border-spacing: 0;
+            line-height: 2;
+        }
+
+        #broadband-availability-address-head {
+            background-color: #ddd;
+        }
+
+        #broadband-availability-address-head th {
+            border-top-left-radius: 3px;
+            color: #fff;
+            padding: 5px;
+            border-left: 1px solid #fff;
+            text-align: center;
+        }
+
+        #broadband-availability-address-head th:first-child {
+            border-left: 0 solid #ccc;
+        }
+
+        #broadband-availability-address-head input {
+            color: #111;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            padding: 4px;
+            float: right;
+            border-radius: 2px;
+        }
+
+        #broadband-availability-address-head input:focus {
+            border-color: rgba(82, 168, 236, .8);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(82, 168, 236, .8);
+            outline: 0;
+        }
+
+        #broadband-availability-address-body td {
+            padding: 5px;
+            border-top: 1px solid #ccc;
+        }
+
+        #broadband-availability-address-body td:nth-child(2) {
+            border-left: 1px solid #ccc;
+        }
+
+        #broadband-availability-address-body td:first-child {
+            text-align: center !important;
+        }
+
+        #broadband-availability-address-nad {
+            float: right;
+            color: #999;
+        }
+    </style>
+
+    <script>
+        function populate_address_list(id, jsonData) {
+            // Get the table body element
+            const addressList = document.querySelector('table[broadband-availability-id="' + id + '"]');
+            const tableBody = addressList.querySelector("#broadband-availability-address-body");
+
+            // Clear the table body first
+            tableBody.innerHTML = '';
+
+            // Loop through the addresses and populate the table
+            jsonData.addresses.forEach((address, index) => {
+                const row = document.createElement("tr");
+
+                const radioCell = document.createElement("td");
+                const radioInput = document.createElement("input");
+                radioInput.type = "radio";
+                radioCell.appendChild(radioInput);
+                row.appendChild(radioCell);
+
+                const addressCell = document.createElement("td");
+                addressCell.innerHTML = `
+            ${address.sub_premises} ${address.premises_name}, ${address.thoroughfare_number} ${address.thoroughfare_name}, ${address.locality}, ${address.post_town}, ${address.county}, ${address.postcode}
+            <input id="broadband-availability-address-pos" value="${index}" style="display: none;">
+            <span id="broadband-availability-address-nad"> ${address.nad_key}</span>
+            `;
+                row.appendChild(addressCell);
+
+                tableBody.appendChild(row);
+            });
+
+            // Add the "None of the above" row
+            const noneRow = document.createElement("tr");
+            const noneRadioCell = document.createElement("td");
+            const noneRadioInput = document.createElement("input");
+            noneRadioInput.type = "radio";
+            noneRadioCell.appendChild(noneRadioInput);
+            noneRow.appendChild(noneRadioCell);
+
+            const noneAddressCell = document.createElement("td");
+            noneAddressCell.innerText = "None of the above";
+            const noneAddressPosInput = document.createElement("input");
+            noneAddressPosInput.id = "broadband-availability-address-pos";
+            noneAddressPosInput.value = "-1";
+            noneAddressPosInput.style.display = "none";
+            noneAddressCell.appendChild(noneAddressPosInput);
+            noneRow.appendChild(noneAddressCell);
+
+            tableBody.appendChild(noneRow);
+        }
+    </script>
+</head>
+
+<body>
+    <table id="broadband-availability-address-list" broadband-availability-id="1234">
+        <thead id="broadband-availability-address-head">
+            <tr>
+                <th style="width: 5%;">
+
+                </th>
+                <th>
+                    <input type="text" placeholder="Filter" id="broadband-availability-address-filter"
+                        onkeyup="filter_address_list('1234')">
+                </th>
+            </tr>
+        </thead>
+        <tbody id="broadband-availability-address-body">
+            <tr>
+                <td>
+                    <input type="radio" onclick="sendAddressPos()">
+                </td>
+                <td>
+                    27 Shelton Avenue, Warlingham, CR6 9NF
+                    <input id="broadband-availability-address-pos" value="0" style="display: none;">
+                    <span id="broadband-availability-address-nad"> A00018872048</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function sendAddressPos(radioButton) {
+            const addressPosInput = radioButton.closest("tr").querySelector("#broadband-availability-address-pos");
+            const addressPosValue = addressPosInput.value;
+
+            fetch("/api.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "address_pos=" + encodeURIComponent(addressPosValue)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response if needed
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+        }
+
+        function filter_address_list(id) {
+            const addressList = document.querySelector('table[broadband-availability-id="' + id + '"]');
+            const filterInput = addressList.querySelector('#broadband-availability-address-filter');
+            const filterText = filterInput.value.toLowerCase();
+            const addressRows = document.querySelectorAll("#broadband-availability-address-body tr");
+
+            addressRows.forEach(row => {
+                const addressText = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
+                if (addressText.includes(filterText) || addressText == "none of the above") {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
