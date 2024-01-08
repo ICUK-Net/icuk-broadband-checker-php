@@ -80,7 +80,7 @@
         });
     }
 
-    function populateAddressList(id, jsonData) {
+    function populateAddressList(id, jsonData, path) {
         // Get the table body element
         const addressList = document.querySelector('#broadband-availability-address-list[broadband-availability-id="' + id + '"]');
         const tableBody = addressList.querySelector("tbody");
@@ -96,7 +96,7 @@
             const radioInput = document.createElement("input");
             radioInput.type = "radio";
             radioInput.onclick = function() {
-                sendAddressPos(id, index);
+                sendAddressPos(id, index, path);
             };
             radioCell.appendChild(radioInput);
             row.appendChild(radioCell);
@@ -153,11 +153,11 @@
         });
     }
 
-    function sendAddressPos(id, address_pos) {
+    function sendAddressPos(id, address_pos, path) {
         hideAddressList(id);
         showResults(id);
 
-        fetch("/api.php", {
+        fetch(path, {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -270,7 +270,7 @@
             if (typeof json["products"] != 'undefined'){
                 populateTable(id, json["products"]);
             } else if (typeof json["addresses"] != 'undefined') {
-                populateAddressList(id, json);
+                populateAddressList(id, json, path);
                 showAddressList(id);
             } else {
                 hideResults(id);
