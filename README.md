@@ -8,7 +8,7 @@ The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are re
 
 Download and extract the latest release
 ```bash
-wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/download/latest/icuk-broadband-checker.tar.gz
+wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
 tar -xvf icuk-broadband-checker.tar.gz
 ```
 
@@ -22,7 +22,7 @@ Download composer.phar (if not already installed)
 wget https://getcomposer.org/download/latest-stable/composer.phar
 ```
 
-Create a composer.json file with this data (if you already have a composer.json file add the data from the require and repositories)
+Create a composer.json file with this data (if you already have a composer.json file add the data from the require)
 ```json
 {
     "name": "root/html",
@@ -96,7 +96,7 @@ $ba->render_search("Example error message");
 ```
 
 ## Custom Styles
-### Method 1.
+### Using Style Configuration
 You can use the SearchStyleSettings and ResultsStyleSettings classes to edit the colour schemes of the search and results modules.
 The example below shows using this to make the search button a red to green fade and the background of the results fields blue.
 
@@ -157,7 +157,7 @@ Currently the rgb, rgba, hex, hsl, hsla, CIELab, and xyz colour formats are supp
 * **filter_box_border_colour** : colour of the border of the filter/search box
 * **filter_box_hover_fade_colour** : colour of filter box when pressed down
 
-### Method 2.
+### Custom Stylesheet
 You can develop your own stylesheet with relative ease as each module's elements are very simple to identify with their id's for example the button in the search
 uses the id "broadband-availability-search-submit" and the input box uses "broadband-availability-search-input".
 You can use the style template php file used by this library [here](src/modules/Styles.php) as a reference
