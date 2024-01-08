@@ -48,17 +48,17 @@ class BroadbandAvailabilityProxy {
         }
 
         if (isset($_POST["address_pos"])) {
-            if (!isset($_SESSION["BroadbandAvailability"]["ADDRESS_LIST"])) {
-                error_log("The session when doing a broadband availability search");
-                return null;
-            }
-
             $address_pos = $_POST["address_pos"];
 
             // If "None of the above" selected then search postcode otherwise search address
             if ($address_pos == -1) {
                 $postcode = $_SESSION["BroadbandAvailability"]["POSTCODE"];
-                return self::search_phonenumber_or_postcode($address["postcode"], $username, $password);
+                return self::search_phonenumber_or_postcode($postcode, $username, $password);
+            }
+
+            if (!isset($_SESSION["BroadbandAvailability"]["ADDRESS_LIST"])) {
+                error_log("The session when doing a broadband availability search");
+                return null;
             }
 
             $address = $_SESSION["BroadbandAvailability"]["ADDRESS_LIST"][$address_pos];

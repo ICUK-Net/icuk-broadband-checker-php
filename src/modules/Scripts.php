@@ -122,6 +122,9 @@
         const noneRadioCell = document.createElement("td");
         const noneRadioInput = document.createElement("input");
         noneRadioInput.type = "radio";
+        noneRadioInput.onclick = function() {
+                sendAddressPos(id, -1, path);
+        };
         noneRadioCell.appendChild(noneRadioInput);
         noneRow.appendChild(noneRadioCell);
 
