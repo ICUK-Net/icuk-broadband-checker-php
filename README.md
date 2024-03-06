@@ -1,5 +1,5 @@
 # ICUK Broadband Availability Checker
-[![Latest Build](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml/badge.svg)](https://github.com/BoronBGP/icuk-broadband-checker-php/actions/workflows/php.yml)
+[![Latest Build](https://github.com/ICUK-Net/icuk-broadband-checker-php/actions/workflows/php.yml/badge.svg)](https://github.com/ICUK-Net/icuk-broadband-checker-php/actions/workflows/php.yml)
 
 Integrate the ICUK broadband availability checker into your PHP application
 ## Installation
@@ -7,8 +7,16 @@ Integrate the ICUK broadband availability checker into your PHP application
 The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are required
 
 Download and extract the latest release
-```bash
-wget https://github.com/BoronBGP/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
+
+Windows
+``` batch
+curl -o icuk-broadband-checker.tar.gz https://github.com/ICUK-Net/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
+tar -xvf icuk-broadband-checker.tar.gz
+```
+
+Linux
+``` bash
+wget https://github.com/ICUK-Net/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
 tar -xvf icuk-broadband-checker.tar.gz
 ```
 
