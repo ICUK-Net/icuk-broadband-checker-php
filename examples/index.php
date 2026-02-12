@@ -13,6 +13,7 @@
 <body>
   <?php
     $ba->render_search();
+    $ba->render_address_list();
     $ba->render_results();
   ?>
 </body>

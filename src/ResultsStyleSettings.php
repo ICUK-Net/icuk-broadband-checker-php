@@ -19,9 +19,11 @@ use Spatie\Color\Exceptions\InvalidColorValue;
  * 
  * @property string $available_label_colour Colour of the available label
  * @property string $not_available_label_colour Colour of the not available label
+ * @property string $planned_label_colour Colour of the planned/limited capacity/potentially available label
  * 
  * @property string $available_text_colour Colour of the text on the available label
  * @property string $not_available_text_colour Color of the text on the not available label
+ * @property string $planned_text_colour Colour of the text on the planned label
  * 
  * @property string $loading_circle_primary_colour The colour of the spinner on the loading circle
  * @property string $loading_circle_secondary_colour The colour of static background of the loading circle
@@ -41,10 +43,12 @@ class ResultsStyleSettings {
     public $left_text_colour;
     public $available_text_colour;
     public $not_available_text_colour;
+    public $planned_text_colour;
 
     // Label Colors
     public $available_label_colour;
     public $not_available_label_colour;
+    public $planned_label_colour;
 
     // Loading Colors
     public $loading_circle_primary_colour;
@@ -84,7 +88,7 @@ class ResultsStyleSettings {
      */
     public function validate() {
         if (!is_bool($this->hide_results)) {
-            error_log("Broadband Availability Checker ResultsStyleSettings.php : $hide_results needs be a boolean");
+            error_log("Broadband Availability Checker ResultsStyleSettings.php : hide_results needs be a boolean");
             return false;
         }
 
@@ -97,8 +101,10 @@ class ResultsStyleSettings {
             self::validate_colour($this->left_text_colour) &&
             self::validate_colour($this->available_label_colour) &&
             self::validate_colour($this->not_available_label_colour) &&
+            self::validate_colour($this->planned_label_colour) &&
             self::validate_colour($this->available_text_colour) &&
             self::validate_colour($this->not_available_text_colour) &&
+            self::validate_colour($this->planned_text_colour) &&
             self::validate_colour($this->loading_circle_primary_colour) &&
             self::validate_colour($this->loading_circle_secondary_colour)
         ) {
@@ -124,8 +130,10 @@ class ResultsStyleSettings {
         $this->left_text_colour = "#fff";
         $this->available_label_colour = "#468847";
         $this->not_available_label_colour = "#c00";
+        $this->planned_label_colour = "#f89406";
         $this->available_text_colour = "#fff";
         $this->not_available_text_colour = "#fff";
+        $this->planned_text_colour = "#fff";
         $this->loading_circle_primary_colour = "#3498db";
         $this->loading_circle_secondary_colour = "#f3f3f3";
         $this->hide_results = true;

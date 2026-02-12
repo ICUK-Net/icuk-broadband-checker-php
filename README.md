@@ -1,13 +1,23 @@
 # ICUK Broadband Availability Checker
+[![Latest Build](https://github.com/ICUK-Net/icuk-broadband-checker-php/actions/workflows/php.yml/badge.svg)](https://github.com/ICUK-Net/icuk-broadband-checker-php/actions/workflows/php.yml)
+
 Integrate the ICUK broadband availability checker into your PHP application
 ## Installation
 
 The PECL [mbstring](http://php.net/mbstring), zip and ext-curl extensions are required
 
 Download and extract the latest release
-```bash
-wget https://github.com/boronbritt/icuk-broadband-availability-checker/releases/download/latest/ba-checker.tar.gz
-tar -xvf ba-checker.tar.gz
+
+Windows
+``` batch
+curl -o icuk-broadband-checker.tar.gz https://github.com/ICUK-Net/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
+tar -xvf icuk-broadband-checker.tar.gz
+```
+
+Linux
+``` bash
+wget https://github.com/ICUK-Net/icuk-broadband-checker-php/releases/latest/download/icuk-broadband-checker.tar.gz
+tar -xvf icuk-broadband-checker.tar.gz
 ```
 
 That is is all that is needed to install the availability checker, if this fails then try installing from source below
@@ -20,7 +30,7 @@ Download composer.phar (if not already installed)
 wget https://getcomposer.org/download/latest-stable/composer.phar
 ```
 
-Create a composer.json file with this data (if you already have a composer.json file add the data from the require and repositories)
+Create a composer.json file with this data (if you already have a composer.json file add the data from the require)
 ```json
 {
     "name": "root/html",
@@ -35,15 +45,15 @@ Create a composer.json file with this data (if you already have a composer.json 
 Install with all dependencies
 
 ```bash
-composer install
+php composer.phar install
 ```
 
 ## Usage
 
 ### api.php
 
-This file will allow the user to make requests to the broadband availability api. You should in this format but with your own credentials and
-you can and should use your own method of authentication beforehand to prevent unauthorised api access to the endpoint.
+This file will allow the user to make requests to the broadband availability api. You should in this format but substitute the credentials with your own and
+you can and should use your own method of authentication beforehand to prevent unauthorised access to the endpoint.
 
 ```php
 <?php
@@ -85,8 +95,7 @@ panel will not appear until a search takes place.
 </html>
 ```
 
-![Example of what the above code should result in](https://github.com/boronbritt/icuk-broadband-availability-checker/blob/master/assets/default_example.png "Should result in this")
-
+![Example of what the above code should result in](https://github.com/BoronBGP/icuk-broadband-checker-php/blob/master/assets/default_example.png "Should result in this")
 
 ### Edit error message
 To swap out the error message that occurs when an availability check fails you can use the error message as a parameter of render_search
@@ -95,7 +104,7 @@ $ba->render_search("Example error message");
 ```
 
 ## Custom Styles
-### Method 1.
+### Using Style Configuration
 You can use the SearchStyleSettings and ResultsStyleSettings classes to edit the colour schemes of the search and results modules.
 The example below shows using this to make the search button a red to green fade and the background of the results fields blue.
 
@@ -112,7 +121,7 @@ $astyle->background_colour = "rgb(0, 255, 0)";
 
 $ba->render_styles($style, $rstyle, $astyle);
 ```
-![Example of what the above code should result in](https://github.com/boronbritt/icuk-broadband-availability-checker/blob/master/assets/style_example.png "Should result in this")
+![Example of what the above code should result in](https://github.com/BoronBGP/icuk-broadband-checker-php/blob/master/assets/style_example.png "Should result in this")
 
 Currently the rgb, rgba, hex, hsl, hsla, CIELab, and xyz colour formats are supported, while colour names such as "purple" or "darkgreen" are invalid.
 
@@ -156,7 +165,7 @@ Currently the rgb, rgba, hex, hsl, hsla, CIELab, and xyz colour formats are supp
 * **filter_box_border_colour** : colour of the border of the filter/search box
 * **filter_box_hover_fade_colour** : colour of filter box when pressed down
 
-### Method 2.
+### Custom Stylesheet
 You can develop your own stylesheet with relative ease as each module's elements are very simple to identify with their id's for example the button in the search
 uses the id "broadband-availability-search-submit" and the input box uses "broadband-availability-search-input".
 You can use the style template php file used by this library [here](src/modules/Styles.php) as a reference
