@@ -214,9 +214,6 @@ class BroadbandAvailabilityProxy {
     
         $result = $apiInstance->oauthTokenPost(self::API_PLATFORM, $grant_type);
 
-<<<<<<< HEAD
-        if (isset($_SESSION)) {
-=======
         if (session_status() === PHP_SESSION_ACTIVE) {
         }
     }
@@ -224,26 +221,15 @@ class BroadbandAvailabilityProxy {
     /**
      * Checks if the specified value is a valid postcode
      * 
-<<<<<<< HEAD
-     * Validates a postcode using regex.
-     * 
-     * @param string $data A string to validate as a phone number
-=======
      * Validates a UK postcode using regex.
      * 
      * @param string $data A string to validate as a postcode
->>>>>>> 474681e (Clean initial commit)
      * 
      * @return bool
      */
     public static function validate_postcode(string $data) {
-<<<<<<< HEAD
-        $postcode_regex = "/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/";
-        return preg_match($postcode_regex, strtoupper(str_replace(' ','', $data)));
-=======
         $postcode_regex = "/^[A-Z]{1,2}[0-9]{1,2}[A-Z]? ?[0-9][A-Z]{2}$/i";
         return preg_match($postcode_regex, strtoupper(str_replace(' ', '', $data)));
->>>>>>> 474681e (Clean initial commit)
     }
 
     /**
@@ -266,8 +252,6 @@ class BroadbandAvailabilityProxy {
             return false;
         }
     }
-<<<<<<< HEAD
-=======
 
     /**
      * Checks if the specified value is a valid ALID (Alternative Line Identifier)
@@ -281,5 +265,4 @@ class BroadbandAvailabilityProxy {
     public static function validate_alid(string $data) {
         return stripos($data, 'BBEU') === 0;
     }
->>>>>>> 474681e (Clean initial commit)
 }
