@@ -16,11 +16,11 @@ class BroadbandAvailabilityProxy {
     /**
      * Handles broadband availability API calls
      * 
-     * Proxys broadband availability API calls on the page using either the phone number, ALID or address
+     * Proxys broadband availability API calls on the page using either the phone number or address
      * for checking broadband availability or the postcode for listing addresses.
      * 
      * When an address is searched there is a possibility the "None of the above" selection was made
-     * on the address list in which case the postcode is used instead.
+     * on the address list in which case the
      * 
      * These api requests are forwarded to api.interdns.co.uk with the provided credentials. The results can be returned on a web page
      * after being json encoded. This function also validates the phone number and postcode to save API calls
@@ -33,23 +33,17 @@ class BroadbandAvailabilityProxy {
      * @param string $password Password for api.interdns.co.uk
      */
     public static function handle_api(string $username, string $password) {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        session_start();
 
         if (isset($_POST["cli_or_postcode"])) {
-            $cli_or_postcode = trim($_POST["cli_or_postcode"]);
-
-            // Strip special characters and Unicode breaking spaces
-            $cli_or_postcode = preg_replace('/[\+\(\)\-]/', '', $cli_or_postcode);
-            $cli_or_postcode = preg_replace('/[\x{202C}-\x{202D}]/u', '', $cli_or_postcode);
+            $cli_or_postcode = $_POST["cli_or_postcode"];
 
             /* If valid postcode then return addresses on road */
             if (self::validate_postcode($cli_or_postcode))
                 return self::list_address($cli_or_postcode, $username, $password);
 
-            /* If valid phone number or ALID return availability results */
-            if (self::validate_phonenumber($cli_or_postcode) || self::validate_alid($cli_or_postcode))
+            /* If valid phone number return availability results */
+            if (self::validate_phonenumber($cli_or_postcode))
                 return self::search_phonenumber_or_postcode($cli_or_postcode, $username, $password);
         }
 
@@ -58,21 +52,12 @@ class BroadbandAvailabilityProxy {
 
             // If "None of the above" selected then search postcode otherwise search address
             if ($address_pos == -1) {
-                $postcode = $_SESSION["BroadbandAvailability"]["POSTCODE"] ?? null;
-                if ($postcode) {
-                    return self::search_phonenumber_or_postcode($postcode, $username, $password);
-                }
-                error_log("Broadband Availability: No postcode found in session for 'None of the above' selection");
-                return null;
+                $postcode = $_SESSION["BroadbandAvailability"]["POSTCODE"];
+                return self::search_phonenumber_or_postcode($postcode, $username, $password);
             }
 
             if (!isset($_SESSION["BroadbandAvailability"]["ADDRESS_LIST"])) {
-                error_log("Broadband Availability: The session address list was not found when doing a broadband availability search");
-                return null;
-            }
-
-            if (!isset($_SESSION["BroadbandAvailability"]["ADDRESS_LIST"][$address_pos])) {
-                error_log("Broadband Availability: Invalid address position " . $address_pos);
+                error_log("The session when doing a broadband availability search");
                 return null;
             }
 
@@ -82,17 +67,17 @@ class BroadbandAvailabilityProxy {
     }
 
     /**
-     * Calls /broadband/availability API endpoint with a phone number, ALID or postcode
+     * Calls /broadband/availability API endpoint with a phone number or postcode
      * 
      * Makes a call to the cli_or_postcode api endpoint using the provided credentials.
      * 
-     * @param string $cli_or_postcode Either a phone number, ALID or a postcode to lookup
+     * @param string $cli_or_password Either a phonenumber or a postcode to lookup
      * @param string $username Username for api.interdns.co.uk
      * @param string $password Password for api.interdns.co.uk
      * 
      * @return \OpenAPI\Client\Model\BroadbandAvailabilityResults
      */
-    public static function search_phonenumber_or_postcode(string $cli_or_postcode, string $username, string $password) {
+    public static function search_phonenumber_or_postcode(string $phonenumber, string $username, string $password) {
         $oauth_token = self::get_oauth_token($username, $password);
 
         $config = \OpenAPI\Client\Configuration::getDefaultConfiguration();
@@ -104,7 +89,7 @@ class BroadbandAvailabilityProxy {
             $config
         );
 
-        return $apiInstance->broadbandAvailabilityCliOrPostcodeGet($cli_or_postcode, self::API_PLATFORM);
+        return $apiInstance->broadbandAvailabilityCliOrPostcodeGet($phonenumber, self::API_PLATFORM);
     }
 
     /**
@@ -114,11 +99,11 @@ class BroadbandAvailabilityProxy {
      * The address list will also be stored in the session as later on the data will
      * need to be accessed for the /broadband/availability endpoint
      * 
-     * @param string $postcode Postcode to lookup
+     * @param string $cli_or_password Either a phonenumber to lookup
      * @param string $username Username for api.interdns.co.uk
      * @param string $password Password for api.interdns.co.uk
      * 
-     * @return \OpenAPI\Client\Model\BroadbandAddressSearchResults
+     * @return \OpenAPI\Client\Model\BroadbandAvailabilityResults
      */
     public static function list_address(string $postcode, string $username, string $password) {
         $oauth_token = self::get_oauth_token($username, $password);
@@ -139,11 +124,11 @@ class BroadbandAvailabilityProxy {
     }
 
     /**
-     * Calls /broadband/availability API endpoint with an address
+     * Calls /broadband/availability API endpoint with a phone number
      * 
-     * Makes a call to the availability api endpoint using the provided credentials and address.
+     * Makes a call to the cli_or_postcode api endpoint using the provided credentials.
      * 
-     * @param mixed $address Address object from the address list
+     * @param string $cli_or_password Either a phonenumber to lookup
      * @param string $username Username for api.interdns.co.uk
      * @param string $password Password for api.interdns.co.uk
      * 
@@ -169,7 +154,7 @@ class BroadbandAvailabilityProxy {
      * 
      * Returns an OAuth token and stores it across the session.
      * If the token stored in the session but expired then it will automatically
-     * renew the OAuth token and then return the value. If no session is found the
+     * renew the OAuth token and then return the value.  If no session is found the
      * token is taken directly from the API.
      * 
      * @param string $username Username for api.interdns.co.uk
@@ -178,14 +163,14 @@ class BroadbandAvailabilityProxy {
      * @return string OAuth token
      */
     public static function get_oauth_token(string $username, string $password) {
-        if (session_status() !== PHP_SESSION_ACTIVE)
+        if (!isset($_SESSION))
             return self::update_oauth_token($username, $password);
 
-        if (!isset($_SESSION["BroadbandAvailability"]["OAUTH_EXPIRY"]))
-            return self::update_oauth_token($username, $password);
+        if(!isset($_SESSION["BroadbandAvailability"]["OAUTH_EXPIRY"]))
+            self::update_oauth_token($username, $password);
 
         if (time() > $_SESSION["BroadbandAvailability"]["OAUTH_EXPIRY"])
-            return self::update_oauth_token($username, $password);
+            self::update_oauth_token($username, $password);
 
         return $_SESSION["BroadbandAvailability"]["OAUTH_TOKEN"];
     }
@@ -206,7 +191,7 @@ class BroadbandAvailabilityProxy {
      */
     public static function update_oauth_token(string $username, string $password) {
         $config = \OpenAPI\Client\Configuration::getDefaultConfiguration();
-        $config->setHost(self::API_HOST);
+        $config->setHost("https://api.interdns.co.uk");
     
         $client = new \GuzzleHttp\Client(['auth' => [$username, $password]]);
         $apiInstance = new \OpenAPI\Client\Api\OAuthApi($client, $config);
@@ -214,7 +199,7 @@ class BroadbandAvailabilityProxy {
     
         $result = $apiInstance->oauthTokenPost(self::API_PLATFORM, $grant_type);
 
-        if (session_status() === PHP_SESSION_ACTIVE) {
+        if (isset($_SESSION)) {
             $_SESSION["BroadbandAvailability"]["OAUTH_TOKEN"] = $result["access_token"];
             $_SESSION["BroadbandAvailability"]["OAUTH_EXPIRY"] = $result["expires_in"] + time();
         }
@@ -224,15 +209,15 @@ class BroadbandAvailabilityProxy {
     /**
      * Checks if the specified value is a valid postcode
      * 
-     * Validates a UK postcode using regex.
+     * Validates a postcode using regex.
      * 
-     * @param string $data A string to validate as a postcode
+     * @param string $data A string to validate as a phone number
      * 
      * @return bool
      */
     public static function validate_postcode(string $data) {
-        $postcode_regex = "/^[A-Z]{1,2}[0-9]{1,2}[A-Z]? ?[0-9][A-Z]{2}$/i";
-        return preg_match($postcode_regex, strtoupper(str_replace(' ', '', $data)));
+        $postcode_regex = "/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/";
+        return preg_match($postcode_regex, strtoupper(str_replace(' ','', $data)));
     }
 
     /**
@@ -254,18 +239,5 @@ class BroadbandAvailabilityProxy {
         } catch (\libphonenumber\NumberParseException $e) {
             return false;
         }
-    }
-
-    /**
-     * Checks if the specified value is a valid ALID (Alternative Line Identifier)
-     * 
-     * Validates an ALID by checking if it starts with 'BBEU'.
-     * 
-     * @param string $data A string to validate as an ALID
-     * 
-     * @return bool
-     */
-    public static function validate_alid(string $data) {
-        return stripos($data, 'BBEU') === 0;
     }
 }
