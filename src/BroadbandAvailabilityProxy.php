@@ -215,7 +215,10 @@ class BroadbandAvailabilityProxy {
         $result = $apiInstance->oauthTokenPost(self::API_PLATFORM, $grant_type);
 
         if (session_status() === PHP_SESSION_ACTIVE) {
+            $_SESSION["BroadbandAvailability"]["OAUTH_TOKEN"] = $result["access_token"];
+            $_SESSION["BroadbandAvailability"]["OAUTH_EXPIRY"] = $result["expires_in"] + time();
         }
+        return $result["access_token"];
     }
 
     /**
