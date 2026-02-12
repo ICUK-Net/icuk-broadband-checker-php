@@ -49,35 +49,58 @@ $astyle = $GLOBALS["BroadbandAvailabilityAddressSelectStyleSettings"];
   width: 15%;
 }
 
-#broadband-availability-available,
-#broadband-availability-not-available {
+.broadband-availability-available,
+.broadband-availability-not-available,
+.broadband-availability-planned {
   font-weight: 700;
   font-size: 11px;
   padding: 1px 4px 2px;
   border-radius: 3px;
 }
 
-#broadband-availability-available {
+.broadband-availability-available {
   background-color: <?php echo $rstyle->available_label_colour; ?>;
   color: <?php echo $rstyle->available_text_colour; ?>;
 }
 
-#broadband-availability-not-available {
+.broadband-availability-not-available {
   background-color: <?php echo $rstyle->not_available_label_colour; ?>;
   color: <?php echo $rstyle->not_available_text_colour; ?>;
+}
+
+.broadband-availability-planned {
+  background-color: <?php echo $rstyle->planned_label_colour; ?>;
+  color: <?php echo $rstyle->planned_text_colour; ?>;
+}
+
+.broadband-availability-speed {
+  font-size: 11px;
+  color: <?php echo $rstyle->text_colour; ?>;
+}
+
+.broadband-availability-speed-down {
+  font-weight: 600;
+}
+
+.broadband-availability-speed-up {
+  color: #999;
+}
+
+.broadband-availability-date {
+  font-size: 10px;
+  color: #999;
+}
+
+.broadband-availability-dash {
+  color: #999;
 }
 
 <?php
 $hi = $style->button_gradient_high;
 $low = $style->button_gradient_low;
 ?>
-#broadband-availability-search-submit {
-  background-image: -ms-linear-gradient(top,<?php echo $hi; ?>,<?php echo $low; ?>);
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(<?php echo $hi; ?>),to(<?php echo $low; ?>));
-  background-image: -webkit-linear-gradient(top,<?php echo $hi; ?>,<?php echo $low; ?>);
-  background-image: -o-linear-gradient(top,<?php echo $hi; ?>,<?php echo $low; ?>);
-  background-image: -moz-linear-gradient(top,<?php echo $hi; ?>,<?php echo $low; ?>);
-  background-image: linear-gradient(top,<?php echo $hi; ?>,<?php echo $low; ?>);
+.broadband-availability-search-submit {
+  background-image: linear-gradient(to bottom, <?php echo $hi; ?>, <?php echo $low; ?>);
   background-repeat: repeat-x;
   font-family: Open Sans, Verdana, HelveticaNeue, Arial, sans-serif;
   padding: 5px 9px;
@@ -92,36 +115,30 @@ $low = $style->button_gradient_low;
 $hi_hover = $style->button_gradient_high_hover;
 $low_hover = $style->button_gradient_low_hover;
 ?>
-#broadband-availability-search-submit:hover{
-  background-image: -ms-linear-gradient(top,<?php echo $hi_hover; ?>,<?php echo $low_hover; ?>);
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(<?php echo $hi_hover; ?>),to(<?php echo $low_hover; ?>));
-  background-image: -webkit-linear-gradient(top,<?php echo $hi_hover; ?>,<?php echo $low_hover; ?>);
-  background-image: -o-linear-gradient(top,<?php echo $hi_hover; ?>,<?php echo $low_hover; ?>);
-  background-image: -moz-linear-gradient(top,<?php echo $hi_hover; ?>,<?php echo $low_hover; ?>);
-  background-image: linear-gradient(top,<?php echo $hi_hover; ?>,<?php echo $low_hover; ?>);
+.broadband-availability-search-submit:hover {
+  background-image: linear-gradient(to bottom, <?php echo $hi_hover; ?>, <?php echo $low_hover; ?>);
   background-repeat: repeat-x;
   cursor: pointer;
 }
   
- 
-#broadband-availability-search-input {
+.broadband-availability-search-input {
   font-family: Open Sans, Verdana, HelveticaNeue, Arial, sans-serif;
   border: 1px solid #aaa;
   border-radius: 2px;
   padding: 2px;
   color: <?php echo $style->input_text_colour; ?>;
-  background-color:  <?php echo $style->input_bg_colour; ?>;
+  background-color: <?php echo $style->input_bg_colour; ?>;
   font-size: 11px;
   line-height: 2;
 }
 
-#broadband-availability-search-input:focus {
+.broadband-availability-search-input:focus {
   border-color: <?php echo $style->input_hover_fade_colour; ?>;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px <?php echo $style->input_hover_fade_colour; ?>;
   outline: 0;
 }
 
-#broadband-availability-search-error {
+.broadband-availability-search-error {
   font-family: Open Sans, Verdana, HelveticaNeue, Arial, sans-serif; 
   color: <?php echo $style->error_message_colour; ?>; 
   font-size: 11px;
@@ -129,21 +146,14 @@ $low_hover = $style->button_gradient_low_hover;
 
 
 .broadband-availability-loader {
-  border: 2px solid color: <?php echo $rstyle->loading_circle_secondary_colour; ?>;
+  border: 2px solid <?php echo $rstyle->loading_circle_secondary_colour; ?>;
   border-radius: 50%;
   border-top: 2px solid <?php echo $rstyle->loading_circle_primary_colour; ?>;
   width: 10px;
   height: 10px;
-  -webkit-animation: broadband-availability-spin 2s linear infinite; /* Safari */
   animation: broadband-availability-spin 2s linear infinite;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-/* Safari */
-@-webkit-keyframes broadband-availability-spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @keyframes broadband-availability-spin {
@@ -208,8 +218,15 @@ $low_hover = $style->button_gradient_low_hover;
   text-align: center !important;
 }
 
-#broadband-availability-address-nad {
+.broadband-availability-address-nad {
   float: right;
   color: <?php echo $astyle->nad_text_colour; ?>;
+}
+
+.broadband-availability-address-uprn {
+  float: right;
+  color: <?php echo $astyle->nad_text_colour; ?>;
+  margin-right: 10px;
+  font-size: 10px;
 }
 </style>

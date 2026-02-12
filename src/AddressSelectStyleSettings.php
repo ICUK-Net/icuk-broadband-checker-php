@@ -5,7 +5,7 @@ use Spatie\Color\Factory;
 use Spatie\Color\Exceptions\InvalidColorValue;
 
 /**
- * Contains values that can be customised to change the style of the results module of the broadband 
+ * Contains values that can be customised to change the style of the address select module of the broadband 
  * availability checker.
  */
  class AddressSelectStyleSettings {
@@ -43,7 +43,7 @@ use Spatie\Color\Exceptions\InvalidColorValue;
             Factory::fromString($colour);
             return true;
         } catch (InvalidColorValue $exception) {
-            error_log("Broadband Availability Checker ResultsStyleSettings.php failed to validate CSS colour: " . $colour);
+            error_log("Broadband Availability Checker AddressSelectStyleSettings.php failed to validate CSS colour: " . $colour);
             return false;
         }
     }

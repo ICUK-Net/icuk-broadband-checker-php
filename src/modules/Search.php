@@ -1,16 +1,16 @@
-<div id="broadband-availability-search" broadband-availability-id=
+<div class="broadband-availability-search" broadband-availability-id=
     <?php
         echo '"' . $GLOBALS["BroadbandAvailabilityId"] . '"'
     ?>>
     
-	<input id="broadband-availability-search-input">
+	<input class="broadband-availability-search-input" placeholder="Phone number or postcode">
 
-    <button id="broadband-availability-search-submit" onclick=
+    <button class="broadband-availability-search-submit" onclick=
     <?php
         echo "'cli_or_postcode(\"" . $GLOBALS["BroadbandAvailabilityId"] . "\", \"" . $GLOBALS["BroadbandAvailabilityPath"] . "\")'"
      ?>>Check Availability</button>
     <br/>
-     <a id="broadband-availability-search-error" style="display: none;"><?php
+     <a class="broadband-availability-search-error" style="display: none;"><?php
         echo $GLOBALS["BroadbandAvailabilityErrorMessage"];
      ?></a>
 </div>
