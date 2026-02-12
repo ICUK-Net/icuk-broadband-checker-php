@@ -4,24 +4,21 @@
     "type": "library",
     "license": "MIT",
     "autoload": {
-        "files": [
-            "src/BroadbandAvailability.php",
-            "src/BroadbandAvailabilityProxy.php",
-            "src/SearchStyleSettings.php",
-            "src/ResultsStyleSettings.php",
-            "src/AddressSelectStyleSettings.php"
-        ]
+        "psr-4": {
+            "Icuk\\BroadbandAvailabilityPhp\\": "src/"
+        }
     },
+
     "authors": [
         {
-            "name": "Ben Innes",
-            "email": "ben@icuk.net"
+            "name": "ICUK Computing Services",
+            "email": "dev@icuk.net"
         }
     ],
     "require": {
-        "icuk/api-php": "dev-master",
         "giggsey/libphonenumber-for-php": "^8.0@dev",
-        "spatie/color": "dev-main"
+        "spatie/color": "^1.5",
+        "icukcomputingservices/php-broadband-api": "dev-main"
     },
     "minimum-stability": "dev"
 }
