@@ -8,7 +8,6 @@
             "Icuk\\BroadbandAvailabilityPhp\\": "src/"
         }
     },
-
     "authors": [
         {
             "name": "ICUK Computing Services",
@@ -16,9 +15,11 @@
         }
     ],
     "require": {
-        "giggsey/libphonenumber-for-php": "^8.0@dev",
-        "spatie/color": "^1.5",
-        "icukcomputingservices/php-broadband-api": "dev-main"
+        "php": "^7.4 || ^8.0",
+        "giggsey/libphonenumber-for-php": "^7.0 || ^8.0",
+        "spatie/color": "^1.0",
+        "icukcomputingservices/php-broadband-api": "^1.0"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
