@@ -1,5 +1,5 @@
 {
-    "name": "icuk/broadband-availability-php",
+    "name": "icukcomputingservices/broadband-availability-php",
     "description": "Integrate the ICUK broadband availability checker into your PHP application",
     "type": "library",
     "license": "MIT",
