@@ -37,7 +37,7 @@ Create a composer.json file with this data (if you already have a composer.json 
     "type": "project",
     "minimum-stability": "dev",
     "require": {
-        "icuk/broadband-availability-php": "dev-master"
+        "icukcomputingservices/broadband-availability-php": "dev-master"
     }
 }
 ```
